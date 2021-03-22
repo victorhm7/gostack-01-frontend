@@ -6,9 +6,12 @@ import Header from './components/Header';
 import './App.css';
 
 function App() {
-  const [projects, setProjects] = useState([
-    'Desenvolvimento de app',
-    'Front-end web',
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {}, [
+    api.get('projects').then(response => {
+      setProjects(response.data);
+    }),
   ]);
 
   function handleAddProject() {
@@ -21,7 +24,7 @@ function App() {
 
       <ul>
         {projects.map(project => (
-          <li key={project}>{project}</li>
+          <li key={project.id}>{project.title}</li>
         ))}
       </ul>
 
