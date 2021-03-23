@@ -8,14 +8,21 @@ import './App.css';
 function App() {
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {}, [
+  useEffect(() => {
     api.get('projects').then(response => {
       setProjects(response.data);
-    }),
-  ]);
+    });
+  }, []);
 
-  function handleAddProject() {
-    setProjects([...projects, `Novo projeto ${Date.now()}`]);
+  async function handleAddProject() {
+    const response = await api.post('projects', {
+      title: `Novo projeto ${Date.now()}`,
+      owner: 'Veaga',
+    });
+
+    const project = response.data;
+
+    setProjects([...projects, project]);
   }
 
   return (
